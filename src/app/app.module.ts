@@ -14,6 +14,7 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { HomeComponent } from './home/home.component';
 import { ProductService } from './shared/product.service';
 import { FilterPipe } from './pipe/filter.pipe';
+import { HttpModule } from '@angular/http';
 
 const routeConfig: Routes = [{
   path: '', component: HomeComponent
@@ -30,6 +31,7 @@ const routeConfig: Routes = [{
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(routeConfig),
+    HttpModule
   ],
   providers: [ProductService],//服务申明在providers, providers中的对象是{provide:'token记号',useClass:具体实例化的Class}, 当组件需要对应服务时，会在这里寻找，并且实例化，然后注入到对应组件中，组件通过构造方法的参数来接受
   bootstrap: [AppComponent]

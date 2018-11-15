@@ -1,42 +1,34 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs';
+import 'rxjs/Rx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private products: Product[] = [
-    new Product(1, 'title1', 100, 1, 'desc1', ['书']),
-    new Product(2, 'title2', 100, 2.5, 'desc2', ['电子产品']),
-    new Product(3, 'title3', 100, 3, 'desc3', ['书']),
-    new Product(4, 'title4', 100, 4, 'desc4', ['电子产品']),
-    new Product(5, 'title5', 100, 5, 'desc5', ['书'])
-  ];
-  private comments: Comment[] = [
-    new Comment(1, 1, '2018-10-31 22:22:22', 'zh', 1, '东西不错'),
-    new Comment(1, 1, '2018-10-31 22:22:22', 'zh2', 2, '东西不错'),
-    new Comment(1, 1, '2018-10-31 22:22:22', 'zh', 3, '东西不错'),
-    new Comment(1, 2, '2018-10-31 22:22:22', 'zh2', 4, '东西不错'),
-    new Comment(1, 3, '2018-10-31 22:22:22', 'zh', 5, '东西不错'),
-    new Comment(1, 4, '2018-10-31 22:22:22', 'zh', 1.5, '东西不错'),
-    new Comment(1, 5, '2018-10-31 22:22:22', 'zh2', 2.5, '东西不错'),
-    new Comment(1, 1, '2018-10-31 22:22:22', 'zh', 3, '东西不错'),
-  ];
 
-  constructor() {
+  constructor(
+    private http: Http
+  ) {
 
   }
 
-  getProducts(): Product[] {
-    return this.products;
+  getAllCategories(): string[] {
+    return ['电子产品', '书', '硬件设备'];
   }
 
-  getProduct(id: number): Product {
-    return this.products.find((product) => product.id == id);
+  getProducts(): Observable<Product[]> {
+    return this.http.get('/api/products').map(res => res.json());
   }
 
-  getCommentsByProductId(id: number): Comment[] {
-    return this.comments.filter((comment: Comment) => comment.productId == id);
+  getProduct(id: number): Observable<Product> {
+    return this.http.get('/api/products/' + id).map(res => res.json());
+  }
+
+  getCommentsByProductId(id: number): Observable<Comment[]> {
+    return this.http.get('/api/products/' + id + '/comments').map(res => res.json());
   }
 
 }
