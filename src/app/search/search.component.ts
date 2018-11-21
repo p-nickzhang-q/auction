@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit {
 
   onSearch() {
     if (this.formModel.valid) {
-      console.log(this.formModel.value);
+      this.productSvc.searchEvent.emit(this.formModel.value)
     }
   }
 

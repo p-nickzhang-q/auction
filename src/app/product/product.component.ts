@@ -22,7 +22,9 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.products = this.productSvs.getProducts();
-
+    this.productSvs.searchEvent.subscribe(
+      params => this.products = this.productSvs.search(params)
+    );
   }
 
 }
