@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { ProductService } from './shared/product.service';
 import { FilterPipe } from './pipe/filter.pipe';
 import { HttpModule } from '@angular/http';
+import { WebsocketService } from './shared/websocket.service';
 
 const routeConfig: Routes = [{
   path: '', component: HomeComponent
@@ -33,7 +34,7 @@ const routeConfig: Routes = [{
     RouterModule.forRoot(routeConfig),
     HttpModule
   ],
-  providers: [ProductService],//服务申明在providers, providers中的对象是{provide:'token记号',useClass:具体实例化的Class}, 当组件需要对应服务时，会在这里寻找，并且实例化，然后注入到对应组件中，组件通过构造方法的参数来接受
+  providers: [ProductService, WebsocketService],//服务申明在providers, providers中的对象是{provide:'token记号',useClass:具体实例化的Class}, 当组件需要对应服务时，会在这里寻找，并且实例化，然后注入到对应组件中，组件通过构造方法的参数来接受
   bootstrap: [AppComponent]
 })
 export class AppModule { }
