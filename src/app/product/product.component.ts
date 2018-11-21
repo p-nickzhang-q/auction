@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Product, ProductService } from '../shared/product.service';
+import { FormControl } from '@angular/forms';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
+
 
 @Component({
   selector: 'app-product',
@@ -7,9 +12,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  constructor() { }
+  private products: Observable<Product[]>
+
+  private imgUrl = 'http://placehold.it/320x150';
+
+  constructor(private productSvs: ProductService) {
+
+  }
 
   ngOnInit() {
+    this.products = this.productSvs.getProducts();
+    this.productSvs.searchEvent.subscribe(
+      params => this.products = this.productSvs.search(params)
+    );
   }
 
 }
